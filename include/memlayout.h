@@ -51,5 +51,37 @@
 #define PLIC_MCLAIM(hart) (PLIC + 0x200004 + (hart)*0x2000)
 #define PLIC_SCLAIM(hart) (PLIC + 0x201004 + (hart)*0x2000)
 
+// the kernel expects there to be RAM
+// for use by the kernel and user pages
+// from physical address 0x80000000 to PHYSTOP.
+#define KERNBASE 0x80000000L
+#define PHYSTOP (KERNBASE + 128 * 1024 * 1024)
+
+// map the trampoline page to the highest address,
+// in both user and kernel space.
+#define TRAMPOLINE (MAXVA - PGSIZE)
+
+// map kernel stacks beneath the trampoline,
+// each surrounded by invalid guard pages.
+#define KSTACK(p) (TRAMPOLINE - ((p) + 1) * 2 * PGSIZE)
+
+// User memory layout.
+// Address zero first:
+//   text
+//   original data and bss
+//   fixed-size stack
+//   expandable heap
+//   ...
+//   TRAPFRAME (p->tf, used by the trampoline)
+//   TRAMPOLINE (the same page as in the kernel)
+#define TRAPFRAME (TRAMPOLINE - PGSIZE)
+
+// For buddy system usage
+#define BUDDY_MAX_ORDER (10UL)
+#define BUDDY_PAGE_SHIFT    (12UL)
+#define BUDDY_PAGE_SIZE     (1UL << BUDDY_PAGE_SHIFT)
+#define BUDDY_PAGE_COUNT (128*1000)
+
+
 
 #endif  // ACMOS_SPR21_MEMLAYOUT_H

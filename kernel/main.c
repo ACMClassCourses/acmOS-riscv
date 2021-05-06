@@ -8,6 +8,7 @@
 #include "common/lock.h"
 #include "common/printk.h"
 #include "common/uart.h"
+#include "memory/mm.h"
 
 volatile static int started = 0;
 
@@ -22,6 +23,10 @@ void main(){
         printk("UART String: %s\n", "Hello, world!");
         kernel_lock_init();
         TEST_lock_test();
+        kern_page_init();
+        kern_page_test();
+        mm_init();
+        pt_init();
         suspend();
         sync_synchronize();
         started = 1;

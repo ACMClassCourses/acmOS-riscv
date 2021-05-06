@@ -38,12 +38,15 @@ set(KERNEL_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(KERNEL_ASM_PATH "${KERNEL_PATH}/asm")
 set(KERNEL_BOOT_PATH "${KERNEL_PATH}/boot")
 set(KERNEL_COMMON_PATH "${KERNEL_PATH}/common")
+set(KERNEL_MM_PATH "${KERNEL_PATH}/memory")
 
 include_directories("${KERNEL_INCLUDE_PATH}")
 add_subdirectory("${KERNEL_PATH}")
 add_subdirectory("${KERNEL_BOOT_PATH}")
 add_subdirectory("${KERNEL_ASM_PATH}")
 add_subdirectory("${KERNEL_COMMON_PATH}")
+add_subdirectory("${KERNEL_MM_PATH}")
+
 
 
 add_executable(kernel.img
@@ -51,6 +54,7 @@ add_executable(kernel.img
         $<TARGET_OBJECTS:${PROJECT_NAME}-arch>
         $<TARGET_OBJECTS:${PROJECT_NAME}-common>
         $<TARGET_OBJECTS:${PROJECT_NAME}-boot>
+        $<TARGET_OBJECTS:${PROJECT_NAME}-memory>
         )
 
 set_property(

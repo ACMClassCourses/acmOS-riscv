@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "mm.h": "c",
+        "uart.h": "c",
+        "memlayout.h": "c",
+        "answer_pgt.h": "c",
+        "answer_mm.h": "c"
+    }
+}
