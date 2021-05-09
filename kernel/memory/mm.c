@@ -15,7 +15,7 @@ static uint64 kernel_page_available[INIT_MAX_PAGES] = {0};
 void kern_page_init() {
     allocated_page = 0;
     for (int i = 0; i < INIT_MAX_PAGES; ++i)
-        kernel_page_available[i] = (uint64)(&kernel_page_initialized[i]);
+        kernel_page_available[i] = (uint64)(&kernel_page_initialized[i * BUDDY_PAGE_SIZE]);
 }
 
 void kern_page_test() {
