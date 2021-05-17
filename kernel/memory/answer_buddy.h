@@ -4,6 +4,7 @@ void _buddy_return_page(page_t* page) {
     // Suggested: 4 LoCs
 }
 
+// 这个函数可以修改
 void _buddy_get_specific_page(page_t* page) {
     page->flags |= BD_PAGE_IN_USE;
     bd_lists[page->orders].nr_free--;
@@ -43,6 +44,7 @@ page_t *_buddy_alloc_page(uint64 order){
     return /* Your return value */NULL;
 }
 
+// 这个函数可以修改
 void buddy_free_page(page_t* page) {
     page_t* current_page = page;
     for (; current_page->orders < bd_max_size; ++current_page->orders) {
@@ -50,8 +52,13 @@ void buddy_free_page(page_t* page) {
         if ((!(buddy_page->flags & BD_PAGE_FREE))) {
             break;
         }
-        _buddy_get_specific_page(buddy_page);
-        _buddy_clear_flag(buddy_page);
+        if(buddy_page->orders != current_page->orders) break;
+        page_t* to_be_released = NULL;
+        if(_buddy_get_page_idx(current_page) > _buddy_get_page_idx(buddy_page))
+            to_be_released = current_page;
+        else to_be_released = buddy_page;
+        _buddy_get_specific_page(to_be_released);
+        _buddy_clear_flag(to_be_released);
         if(_buddy_get_page_idx(current_page) > _buddy_get_page_idx(buddy_page))current_page = buddy_page;
     }
     _buddy_return_page(current_page);
