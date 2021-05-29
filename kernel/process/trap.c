@@ -9,7 +9,8 @@ void trap_init_vec(){
     // 将kernelvec作为内核中断处理基地址写入stvec向量。
 
 }
-
+// 真实的 syscall 处理过程
+// 根据你在 user/stdlib.h 中的 syscall 操作在这里对应地寻找目标
 void syscall(){
 
 }

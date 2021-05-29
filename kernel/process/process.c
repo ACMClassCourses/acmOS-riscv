@@ -3,7 +3,7 @@
 #include "pagetable.h"
 #include "elf.h"
 
-extern const char user_binary_putc;
+extern const char binary_putc_start;
 thread_t *running[NCPU];
 struct list_head sched_list[NCPU];
 struct lock pidlock, tidlock, schedlock;
@@ -60,7 +60,7 @@ process_t *alloc_proc(const char* bin, thread_t *thr){
 bool load_thread(file_type_t type){
     if(type == PUTC){
         thread_t *t = NULL;
-        process_t *p = alloc_proc(&user_binary_putc, t);
+        process_t *p = alloc_proc(&binary_putc_start, t);
         if(!t) return false;
         sched_enqueue(t);
     } else {
