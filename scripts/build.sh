@@ -1,3 +1,7 @@
+cd user
+make putc
+cd ..
+
 if [ ! -d "build" ]; then
     mkdir build
 fi

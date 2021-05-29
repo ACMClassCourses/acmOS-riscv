@@ -27,11 +27,15 @@ void main(){
         kern_page_test();
         mm_init();
         pt_init();
-        suspend();
+        trap_init_vec();
+        sched_init();
+        proc_init();
+        
         sync_synchronize();
         started = 1;
     } else {
         while(started == 0);
         sync_synchronize();
     }
+    sched_start();
 }

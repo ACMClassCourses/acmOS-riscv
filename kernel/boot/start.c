@@ -175,7 +175,11 @@ void kerneltrap() {
     }
 
     // give up the CPU if this is a timer interrupt.
-
+    if(which_dev == 2){
+        // 插入内核中断的处理
+        // 注：此处可以不加任何处理也可以加入重新调度
+        // 该处不会影响分数
+    }
     // the yield() may have caused some traps to occur,
     // so restore trap registers for use by kernelvec.S's sepc instruction.
     w_sepc(sepc);

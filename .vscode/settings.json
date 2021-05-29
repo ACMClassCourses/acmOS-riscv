@@ -4,6 +4,9 @@
         "uart.h": "c",
         "memlayout.h": "c",
         "answer_pgt.h": "c",
-        "answer_mm.h": "c"
+        "answer_mm.h": "c",
+        "answer_buddy.h": "c",
+        "lock.h": "c",
+        "pagetable.h": "c"
     }
 }
