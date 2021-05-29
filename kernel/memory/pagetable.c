@@ -9,7 +9,7 @@
 // and enable paging.
 
 extern char endTextSect[]; // indicate the end of the text section
-
+pagetable_t kernel_pagetable;
 #include "answer_pgt.h"
 
 void pt_init() {

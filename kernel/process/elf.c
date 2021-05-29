@@ -9,6 +9,7 @@
  */
 
 #include "elf.h"
+#include "mm.h"
 
 static bool is_elf_magic(struct elf_indent *indent) {
     return (indent->ei_magic[0] == 0x7F && indent->ei_magic[1] == 'E' &&
@@ -254,9 +255,9 @@ static int parse_elf_section_header(const char *code, const struct elf_header *e
 }
 
 void elf_free(struct elf_file *elf) {
-    if (elf->s_headers) kfree(elf->s_headers);
-    if (elf->p_headers) kfree(elf->p_headers);
-    kfree(elf);
+    if (elf->s_headers) mm_kfree(elf->s_headers);
+    if (elf->p_headers) mm_kfree(elf->p_headers);
+    mm_kfree(elf);
 }
 
 struct elf_file *elf_parse_file(const char *code) {
@@ -264,7 +265,7 @@ struct elf_file *elf_parse_file(const char *code) {
     int err;
     int i;
 
-    elf = kmalloc(sizeof(*elf));
+    elf = mm_kalloc(sizeof(*elf));
     if (!elf) return ERR_PTR(-ENOMEM);
 
     err = parse_elf_header(code, &elf->header);
@@ -272,9 +273,9 @@ struct elf_file *elf_parse_file(const char *code) {
 
     /* Allocate memory for program headers and section headers */
     err = -ENOMEM;
-    elf->p_headers = kmalloc(elf->header.e_phentsize * elf->header.e_phnum);
+    elf->p_headers = mm_kalloc(elf->header.e_phentsize * elf->header.e_phnum);
     if (!elf->p_headers) goto out_free_elf;
-    elf->s_headers = kmalloc(elf->header.e_shentsize * elf->header.e_shnum);
+    elf->s_headers = mm_kalloc(elf->header.e_shentsize * elf->header.e_shnum);
     if (!elf->s_headers) goto out_free_elf_p;
 
     /* Parse program headers and section headers */
@@ -291,11 +292,11 @@ struct elf_file *elf_parse_file(const char *code) {
     return elf;
 
 out_free_all:
-    kfree(elf->s_headers);
+    mm_kfree(elf->s_headers);
 out_free_elf_p:
-    kfree(elf->p_headers);
+    mm_kfree(elf->p_headers);
 out_free_elf:
-    kfree(elf);
+    mm_kfree(elf);
     return ERR_PTR((long)err);
 }
 

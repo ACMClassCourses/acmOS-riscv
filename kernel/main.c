@@ -5,10 +5,11 @@
 #include <defs.h>
 #include <riscv.h>
 
-#include "common/lock.h"
-#include "common/printk.h"
-#include "common/uart.h"
-#include "memory/mm.h"
+#include "lock.h"
+#include "printk.h"
+#include "uart.h"
+#include "mm.h"
+#include "process.h"
 
 volatile static int started = 0;
 

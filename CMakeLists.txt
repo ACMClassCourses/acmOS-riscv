@@ -26,7 +26,7 @@ set(CMAKE_C_FLAGS_RELEASE "-O1 -g2")
 set(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 
 set(CMAKE_C_FLAGS
-        "-Werror -Wall -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib")
+        "-Wall -O -fno-omit-frame-pointer -ggdb -MD -mcmodel=medany -ffreestanding -fno-common -nostdlib")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__FILENAME__='\"$(subst ${CMAKE_SOURCE_DIR}/,,$(abspath $<))\"'")
 set(CMAKE_LINK_LIBRARY_FLAG "-z max-page-size=4096")
 

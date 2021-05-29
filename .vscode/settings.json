@@ -7,6 +7,7 @@
         "answer_mm.h": "c",
         "answer_buddy.h": "c",
         "lock.h": "c",
-        "pagetable.h": "c"
+        "pagetable.h": "c",
+        "process.h": "c"
     }
 }

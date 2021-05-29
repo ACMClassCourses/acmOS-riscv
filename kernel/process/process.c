@@ -1,6 +1,6 @@
 #include "process.h"
-#include "common/lock.h"
-#include "memory/pagetable.h"
+#include "lock.h"
+#include "pagetable.h"
 #include "elf.h"
 
 extern const char user_binary_putc;
@@ -27,7 +27,7 @@ static uint64 load_binary(pagetable_t *target_page_table, const char *bin){
             // 对应段的在内存中的虚拟地址
             p_vaddr = elf->p_headers[i].p_vaddr;
             // 对映射大小做页对齐
-			seg_map_sz = ROUND_UP(seg_sz + p_vaddr, PGSIZE) - ROUND_DOWN(p_vaddr, PGSIZE);
+			seg_map_sz = ROUNDUP(seg_sz + p_vaddr, PGSIZE) - PGROUNDDOWN(p_vaddr);
             // 接下来代码的期望目的：将程序代码映射/复制到对应的内存空间
             // 一种可能的实现如下：
             /* 
@@ -62,7 +62,7 @@ bool load_thread(file_type_t type){
         thread_t *t = NULL;
         process_t *p = alloc_proc(&user_binary_putc, t);
         if(!t) return false;
-        sched_enqueue(&t->sched_list_thread_node);
+        sched_enqueue(t);
     } else {
         BUG("Not supported");
     }
@@ -87,6 +87,11 @@ thread_t *sched_dequeue(){
 
 bool sched_empty(){
     return list_empty(&(sched_list[cpuid()]));
+}
+
+// 开始运行某个特定的函数
+void thread_run(thread_t *target){
+
 }
 
 // sched_start函数启动调度，按照调度的队列开始运行。

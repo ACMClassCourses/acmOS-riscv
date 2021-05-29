@@ -31,6 +31,7 @@
 void mm_init();
 void uart_memory_init();
 void* mm_kalloc();
+void mm_kfree(void* ptr);
 
 // Kernel Memory Function
 void kern_page_init();

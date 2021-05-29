@@ -8,7 +8,7 @@
 #include <riscv.h>
 #include "mm.h"
 
-pagetable_t kernel_pagetable;
+extern pagetable_t kernel_pagetable;
 
 
 void pt_init();

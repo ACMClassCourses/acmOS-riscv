@@ -1,10 +1,16 @@
 #include <defs.h>
 #include <riscv.h>
 extern void kernelvec();
+extern int devintr();
+void usertrapret();
 
 void trap_init_vec(){
     // Only 1 LoC
     // 将kernelvec作为内核中断处理基地址写入stvec向量。
+
+}
+
+void syscall(){
 
 }
 
@@ -40,7 +46,7 @@ void usertrap(void) {
 }
 
 // Trap 后半处理函数
-void usertrapret(void) {
+void usertrapret() {
     /* 你需要在这个函数中做的事情（仅供参考，你可以有自己的设计）：
      * 
      * 关闭中断

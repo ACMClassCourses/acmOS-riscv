@@ -6,7 +6,7 @@
 #define ACMOS_SPR21_PROCESS_H
 
 #include <list.h>
-#include <memory/pagetable.h>
+#include <pagetable.h>
 
 typedef enum state { UNUSED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE, IDLE } process_state_t;
 typedef enum file_type{PUTC} file_type_t;
@@ -29,7 +29,6 @@ typedef struct thread {
 
 } thread_t;
 
-static uint64 load_binary(pagetable_t *target_page_table, const char *bin);
 process_t *alloc_proc(const char* bin, thread_t *thr);
 bool load_thread(file_type_t type);
 void sched_enqueue(thread_t *target_thread);
@@ -38,4 +37,5 @@ bool sched_empty();
 void sched_start();
 void sched_init();
 void proc_init();
+void trap_init_vec();
 #endif  // ACMOS_SPR21_PROCESS_H
